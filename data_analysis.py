@@ -24,17 +24,28 @@ def process_data():
 
     # bar graph to show average carbs for each diet type
     sns.barplot(x=avg_macros.index, y=avg_macros['Carbs(g)'])
-    plt.title('Average Protein by Diet Type')
+    plt.title('Average Carbs by Diet Type')
     plt.ylabel('Average Carbs (g)')
     plt.show()
 
+    # bar graph to show average fat for each diet type
     sns.barplot(x=avg_macros.index, y=avg_macros['Fat(g)'])
     plt.title('Average Fat by Diet Type')
     plt.ylabel('Average Fat (g)')
     plt.show()
 
+    # heatmap to show average protein for each diet type
+    sns.heatmap(data=avg_macros['Protein(g)'])
+    plt.title('Protein by Diet Type')
+    plt.ylabel('Protein (g)')
+    plt.show()
 
-    sns.heatmap(data=avg_macros['Protein(g)'], cmap='YlGnBu')
+    # heatmap to show average carbs for each diet type
+    sns.heatmap(data=avg_macros['Carbs(g)'])
+    plt.title('Carbs by Diet Type')
+    plt.ylabel('Carbs (g)')
+    plt.show()
+
 
 if __name__ == '__main__':
     process_data()
