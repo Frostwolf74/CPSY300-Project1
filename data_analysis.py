@@ -4,7 +4,9 @@ import matplotlib.pyplot as plt
 
 def process_data():
     df = pd.read_csv("All_Diets.csv")
-    df.fillna(df.astype().mean(), inplace=True)
+    df.fillna(pd.DataFrame( # reads data values instead of string headers and data values causing type mismatch
+        [df['Protein(g)'].mean(), df['Carbs(g)'].mean(), df['Fat(g)'].mean()]
+    ).mean(), inplace=True)
 
     avg_macros = df.groupby('Diet_type')[['Protein(g)', 'Carbs(g)', 'Fat(g)']].mean()
     top_protein = df.sort_values('Protein(g)', ascending=False).groupby('Diet_type').head(5)
