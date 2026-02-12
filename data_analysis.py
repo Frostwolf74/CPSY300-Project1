@@ -2,6 +2,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+
 def process_data():
     df = pd.read_csv("All_Diets.csv")
     df.fillna(pd.DataFrame( # reads data values instead of string headers and data values causing type mismatch
@@ -9,7 +10,7 @@ def process_data():
     ).mean(), inplace=True)
 
     avg_macros = df.groupby('Diet_type')[['Protein(g)', 'Carbs(g)', 'Fat(g)']].mean()
-    # top_protein = df.sort_values('Protein(g)', ascending=False).groupby('Diet_type').head(5)
+    top_protein = df.sort_values('Protein(g)', ascending=False).groupby('Diet_type').head(5)
 
     df['Protein_to_Carbs_ratio'] = df['Protein(g)'] / df['Carbs(g)']
     df['Carbs_to_Fat_ratio'] = df['Carbs(g)'] / df['Fat(g)']
@@ -21,23 +22,25 @@ def process_data():
     sns.barplot(x=avg_macros.index, y=avg_macros['Protein(g)'])
     plt.title('Average Protein by Diet Type')
     plt.ylabel('Average Protein (g)')
+    plt.savefig('avg_macros_protein_bar.png')
     plt.show()
 
     # bar graph to show average carbs for each diet type
     sns.barplot(x=avg_macros.index, y=avg_macros['Carbs(g)'])
     plt.title('Average Carbs by Diet Type')
     plt.ylabel('Average Carbs (g)')
+    plt.savefig('avg_macros_carbs_bar.png')
     plt.show()
 
     # bar graph to show average fat for each diet type
     sns.barplot(x=avg_macros.index, y=avg_macros['Fat(g)'])
     plt.title('Average Fat by Diet Type')
     plt.ylabel('Average Fat (g)')
+    plt.savefig('avg_macros_fat_bar.png')
     plt.show()
 
-    ## heatmaps
-    # heatmap to show average protein for each diet type
-
+    ## heatmap
+    # heatmap to show average macronutrients for each diet type
     heatmap_data = avg_macros.T
     heatmap_data.index = ["Protein (g)", "Carbs (g)", "Fat (g)"]
     plt.figure(figsize=(10, 3.5))
@@ -52,6 +55,16 @@ def process_data():
     plt.xlabel("Diet type")
     plt.ylabel("Macronutrient")
     plt.tight_layout()
+    plt.savefig('avg_macros_heatmap.png')
+    plt.show()
+
+    ## scatterplot
+    # scatterplot to show the top 5 protein-rich recipes and their distribution across cuisines
+    sns.scatterplot(data=top_protein, x='Protein(g)', y='Cuisine_type')
+    plt.title('Top 5 Protein Rich Recipes')
+    plt.xlabel('Protein (g)')
+    plt.ylabel('Cuisine Type')
+    plt.savefig('top_protein_recipes.png')
     plt.show()
 
 
