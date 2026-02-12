@@ -9,13 +9,14 @@ def process_data():
     ).mean(), inplace=True)
 
     avg_macros = df.groupby('Diet_type')[['Protein(g)', 'Carbs(g)', 'Fat(g)']].mean()
-    top_protein = df.sort_values('Protein(g)', ascending=False).groupby('Diet_type').head(5)
+    # top_protein = df.sort_values('Protein(g)', ascending=False).groupby('Diet_type').head(5)
 
     df['Protein_to_Carbs_ratio'] = df['Protein(g)'] / df['Carbs(g)']
     df['Carbs_to_Fat_ratio'] = df['Carbs(g)'] / df['Fat(g)']
 
 
-    ## visualize data for macronutrients
+    ### visualize data for macronutrients
+    ## bar graphs
     # bar graph to show average protein for each diet type
     sns.barplot(x=avg_macros.index, y=avg_macros['Protein(g)'])
     plt.title('Average Protein by Diet Type')
@@ -34,16 +35,23 @@ def process_data():
     plt.ylabel('Average Fat (g)')
     plt.show()
 
+    ## heatmaps
     # heatmap to show average protein for each diet type
-    sns.heatmap(data=avg_macros['Protein(g)'])
-    plt.title('Protein by Diet Type')
-    plt.ylabel('Protein (g)')
-    plt.show()
 
-    # heatmap to show average carbs for each diet type
-    sns.heatmap(data=avg_macros['Carbs(g)'])
-    plt.title('Carbs by Diet Type')
-    plt.ylabel('Carbs (g)')
+    heatmap_data = avg_macros.T
+    heatmap_data.index = ["Protein (g)", "Carbs (g)", "Fat (g)"]
+    plt.figure(figsize=(10, 3.5))
+    sns.heatmap(
+        heatmap_data,
+        annot=True, fmt=".1f",
+        cmap="YlGnBu",
+        linewidths=0.5,
+        cbar_kws={"label": "Average grams"}
+    )
+    plt.title("Average Macronutrients by Diet Type")
+    plt.xlabel("Diet type")
+    plt.ylabel("Macronutrient")
+    plt.tight_layout()
     plt.show()
 
 
