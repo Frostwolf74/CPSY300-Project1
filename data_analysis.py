@@ -4,9 +4,7 @@ import seaborn as sns
 from datetime import datetime
 import os
 
-print(f"=== DIET ANALYSIS STARTED at {datetime.now()} ===")
-print(f"Current directory: {os.getcwd()}")
-print(f"Files in directory: {os.listdir('.')}")
+
 
 # 1. LOAD DATA
 try:
@@ -30,6 +28,7 @@ print("\n=== AVERAGE MACROS PER DIET ===")
 print(avg_macros)
 avg_macros.to_csv('avg_macros_by_diet.csv')
 
+<<<<<<< HEAD
 # 4. TOP 5 PROTEIN RECIPES PER DIET
 top_protein = df.sort_values('Protein(g)', ascending=False).groupby('Diet_type').head(5)
 top_protein[['Diet_type', 'Recipe_name', 'Protein(g)']].to_csv('top5_protein_per_diet.csv')
@@ -64,6 +63,58 @@ plt.tight_layout()
 plt.savefig('avg_macros_bar_chart.png', dpi=150)
 plt.show()
 print("✅ Bar chart saved as avg_macros_bar_chart.png")
+=======
+    ### visualize data for macronutrients
+    ## bar graphs
+    # bar graph to show average protein for each diet type
+    sns.barplot(x=avg_macros.index, y=avg_macros['Protein(g)'])
+    plt.title('Average Protein by Diet Type')
+    plt.ylabel('Average Protein (g)')
+    plt.savefig('avg_macros_protein_bar.png')
+    plt.show()
+
+    # bar graph to show average carbs for each diet type
+    sns.barplot(x=avg_macros.index, y=avg_macros['Carbs(g)'])
+    plt.title('Average Carbs by Diet Type')
+    plt.ylabel('Average Carbs (g)')
+    plt.savefig('avg_macros_carbs_bar.png')
+    plt.show()
+
+    # bar graph to show average fat for each diet type
+    sns.barplot(x=avg_macros.index, y=avg_macros['Fat(g)'])
+    plt.title('Average Fat by Diet Type')
+    plt.ylabel('Average Fat (g)')
+    plt.savefig('avg_macros_fat_bar.png')
+    plt.show()
+
+    ## heatmap
+    # heatmap to show average macronutrients for each diet type
+    heatmap_data = avg_macros.T
+    heatmap_data.index = ["Protein (g)", "Carbs (g)", "Fat (g)"]
+    plt.figure(figsize=(10, 3.5))
+    sns.heatmap(
+        heatmap_data,
+        annot=True, fmt=".1f",
+        cmap="YlGnBu",
+        linewidths=0.5,
+        cbar_kws={"label": "Average grams"}
+    )
+    plt.title("Average Macronutrients by Diet Type")
+    plt.xlabel("Diet type")
+    plt.ylabel("Macronutrient")
+    plt.tight_layout()
+    plt.savefig('avg_macros_heatmap.png')
+    plt.show()
+
+    ## scatterplot
+    # scatterplot to show the top 5 protein-rich recipes and their distribution across cuisines
+    sns.scatterplot(data=top_protein, x='Protein(g)', y='Cuisine_type')
+    plt.title('Top 5 Protein Rich Recipes')
+    plt.xlabel('Protein (g)')
+    plt.ylabel('Cuisine Type')
+    plt.savefig('top_protein_recipes.png')
+    plt.show()
+>>>>>>> d7363e47f169ac059fe480e3c6ace1efb35bc309
 
 # 9. VISUALIZATION 2: HEATMAP
 plt.figure(figsize=(10, 8))
