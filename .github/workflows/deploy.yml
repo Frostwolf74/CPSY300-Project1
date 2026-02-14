@@ -50,7 +50,7 @@ jobs:
     
     - name: Simulate deployment
       run: |
-        echo "🚀 Simulating deployment to production environment"
+        echo "Simulating deployment to production environment"
         echo "Deployment successful at $(date)"
         echo "Container: diet-analysis:latest"
         echo "All tests passed"
