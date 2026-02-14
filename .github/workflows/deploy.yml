@@ -27,7 +27,7 @@ jobs:
     
     - name: Test data processing script
       run: |
-        echo "✅ Testing Python script..."
+        echo "Testing Python script"
         python -c "import pandas; print('Pandas version:', pandas.__version__)"
     
     - name: Build Docker image
@@ -53,4 +53,4 @@ jobs:
         echo "🚀 Simulating deployment to production environment"
         echo "Deployment successful at $(date)"
         echo "Container: diet-analysis:latest"
-        echo "✅ All tests passed - ready for production"
+        echo "All tests passed"
